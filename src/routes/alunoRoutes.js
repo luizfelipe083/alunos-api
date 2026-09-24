@@ -4,6 +4,7 @@ const alunoController = require("../controllers/AlunoController");
 const router = express.Router();
 
 router.get("/", alunoController.findMany);
+router.get("/:id", alunoController.findUnique);
 router.post("/", alunoController.create);
 
 module.exports = router;

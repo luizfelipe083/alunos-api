@@ -1,7 +1,21 @@
 const prisma = require("../models/prismaClient");
 const AlunoInvalidoError = require("../errors/AlunoInvalidoError");
+const AlunoNaoEncontradoError = require("../errors/AlunoNaoEncontradoError");
 
 class AlunoService {
+  async findUnique(id) {
+    // O id chega como texto (request.params); o campo no schema é Int.
+    const aluno = await prisma.aluno.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!aluno) {
+      throw new AlunoNaoEncontradoError();
+    }
+
+    return aluno;
+  }
+
   async findMany(page, pageSize, orderBy, order) {
     // Só aceitamos ordenar por campos que realmente existem no model,
     // senão o Prisma quebra a aplicação com um campo inválido.
