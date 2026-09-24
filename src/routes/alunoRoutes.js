@@ -8,5 +8,6 @@ router.get("/:id", alunoController.findUnique);
 router.post("/", alunoController.create);
 router.put("/:id", alunoController.update);
 router.patch("/:id", alunoController.update);
+router.delete("/:id", alunoController.delete);
 
 module.exports = router;

@@ -38,6 +38,14 @@ class AlunoService {
     }
   }
 
+  async delete(id) {
+    await this.findUnique(id); // lança AlunoNaoEncontradoError se o id não existir
+
+    await prisma.aluno.delete({
+      where: { id: Number(id) },
+    });
+  }
+
   async findUnique(id) {
     // O id chega como texto (request.params); o campo no schema é Int.
     const aluno = await prisma.aluno.findUnique({

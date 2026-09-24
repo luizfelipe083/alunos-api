@@ -1,6 +1,17 @@
 const alunoService = require("../services/AlunoService");
 
 class AlunoController {
+  async delete(request, response) {
+    try {
+      const { id } = request.params;
+      await alunoService.delete(id);
+      // 204: remoção bem-sucedida, sem corpo na resposta.
+      return response.status(204).end();
+    } catch (e) {
+      return response.status(e.statusCode || 500).json({ error: e.message });
+    }
+  }
+
   async update(request, response) {
     try {
       const { id } = request.params;
