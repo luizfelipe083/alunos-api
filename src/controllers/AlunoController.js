@@ -2,12 +2,13 @@ const alunoService = require("../services/AlunoService");
 
 class AlunoController {
   async findMany(request, response) {
-    let { page, pageSize } = request.query;
+    let { page, pageSize, orderBy, order, tipoOrdenacao } = request.query;
     page ||= 1;
     pageSize ||= 10;
+    order = order || tipoOrdenacao; // aceita "order" ou "tipoOrdenacao"
 
-    const alunos = await alunoService.findMany(page, pageSize);
-    return response.status(200).json({ alunos });
+    const { alunos, total } = await alunoService.findMany(page, pageSize, orderBy, order);
+    return response.status(200).json({ alunos, total });
   }
 
   async create(request, response) {
